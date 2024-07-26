@@ -1,18 +1,44 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 export default function MovieDetail() {
-  const { id } = useParams();
+  const { imdbid } = useParams();
+  const [movie, setmovie] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const fetchMovieDetail = () => {
-    fetch(`http://www.omdbapi.com/?apikey=144e0763&i=${id}`)
+  const fetchMovie = () => {
+    setLoading(true);
+    fetch(`http://www.omdbapi.com/?apikey=144e0763&i=${imdbid}`)
       .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+      .then((data) => {
+        if (data) setmovie(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
-    fetchMovieDetail();
+    fetchMovie();
   }, []);
-
-  return <div>MovieDetail {id}</div>;
+  return (
+    <div>
+      {loading == true ? (
+        <p>Please wait we are fetching the data ......</p>
+      ) : (
+        <div>
+          {movie == null ? (
+            <p>NO data found</p>
+          ) : (
+            <div>
+              <img src={movie.Poster} />
+              <p>Name : {movie.Title}</p>
+              <p>Desc : {movie.Plot}</p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }

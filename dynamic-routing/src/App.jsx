@@ -3,6 +3,7 @@ import Home from "./components/Home";
 import Movies from "./components/Movies";
 import Login from "./components/Login";
 import MovieDetail from "./components/MovieDetail";
+
 function App() {
   return (
     <div>
@@ -10,7 +11,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/movies" element={<Movies />} />
-        <Route path="/movie-detail/:id" element={<MovieDetail />} />
+        <Route path="/movie-detail/:imdbid" element={<MovieDetail />} />
       </Routes>
     </div>
   );

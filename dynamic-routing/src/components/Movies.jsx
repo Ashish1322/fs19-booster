@@ -10,18 +10,17 @@ export default function Movies() {
       .catch((err) => console.log(err));
   };
 
-  console.log(movies);
-
   useEffect(() => {
     fetchMovies();
   }, []);
 
   return (
     <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+      <h1>hi</h1>
       {movies.map((item, index) => (
-        <Link to={`/movie-detail/${item.imdbID}`} target="_blank">
+        <Link to={`/movie-detail/${item.imdbID}`}>
           <div>
-            <img width="300px" src={item.Poster} />
+            <img src={item.Poster} />
             <h3>{item.Title}</h3>
           </div>
         </Link>

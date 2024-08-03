@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo, deleteTodo } from "./redux/slices/todoSlice";
+import { fetchMovies } from "./redux/slices/counterSlice";
 function App() {
   const { todos } = useSelector((state) => state.todosSlice);
-  const { count } = useSelector((state) => state.counter);
+  const { count, movies } = useSelector((state) => state.counter);
 
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   return (
     <div>
+      <button onClick={() => dispatch(fetchMovies())}>Fetch Movies</button>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -37,7 +39,9 @@ function App() {
         />
         <button>Submit</button>
       </form>
-
+      {movies.map((item) => (
+        <p>{item.Title}</p>
+      ))}
       <div>
         {todos.map((item, index) => {
           return (
